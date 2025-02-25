@@ -68,6 +68,11 @@ const habitSlice = createSlice({
         }
       }
     },
+
+    removeHabit: (state, action: PayloadAction<{ id: string }>) => {
+      const newHabits = state.habits.filter((habit) => habit.id !== action.payload.id);
+      state.habits = newHabits;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,6 +90,6 @@ const habitSlice = createSlice({
   },
 });
 
-export const { addHabit, toggleHabit } = habitSlice.actions;
+export const { addHabit, toggleHabit, removeHabit } = habitSlice.actions;
 
 export default habitSlice.reducer;

@@ -4,7 +4,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CheckCirCleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Habit, toggleHabit } from "../store/habit-slice";
+import { Habit, removeHabit, toggleHabit } from "../store/habit-slice";
 
 const HabitList: React.FC = () => {
   const habits = useSelector((state: RootState) => state.habits.habits);
@@ -46,7 +46,7 @@ const HabitList: React.FC = () => {
                   <Button variant="outlined" color={habit.completedDates.includes(today) ? "success" : "primary"} startIcon={<CheckCirCleIcon />} onClick={() => dispatch(toggleHabit({ id: habit.id, date: today }))}>
                     {habit.completedDates.includes(today) ? "Completed" : "Mark Complete"}
                   </Button>
-                  <Button variant="outlined" color="error" startIcon={<DeleteIcon />}>
+                  <Button variant="outlined" color="error" startIcon={<DeleteIcon />} onClick={() => dispatch(removeHabit({ id: habit.id }))}>
                     Remove
                   </Button>
                 </Box>
@@ -54,7 +54,6 @@ const HabitList: React.FC = () => {
             </Grid>
             <Box sx={{ mt: 2 }}>
               <Typography variant="body2">Current Streak: {getStreak(habit)} days</Typography>
-
               <LinearProgress variant="determinate" value={(getStreak(habit) / 30) * 100} sx={{ mt: 1 }}></LinearProgress>
             </Box>
           </Paper>
